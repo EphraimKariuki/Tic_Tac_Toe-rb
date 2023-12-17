@@ -49,14 +49,19 @@
     def player_move
       puts "It's #{@current_player.name}'s turn. Enter a number to place your marker:"
       input = gets.chomp
-      row = input[0].to_i - 1
-      col = input[1].to_i - 1
-      if @board[row][col].nil?
-        @board[row][col] = @current_player.marker
+      if @board.flatten.count(input.to_i) == 1
+        @board.each do |row|
+          row.each_with_index do |cell, cell_index|
+            if cell == input.to_i
+              row[cell_index] = @current_player.marker
+            end
+          end 
+          # player_move
+        end 
       else
-        puts "That cell is already occupied. Please try again."
+        puts "Invalid move. Please try again."
         player_move
-      end
+      end  
     end
     def check_winner
       # check rows
