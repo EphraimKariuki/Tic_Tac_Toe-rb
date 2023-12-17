@@ -91,10 +91,6 @@
     def switch_player
       @current_player = @current_player == @player1 ? @player2 : @player1
     end
-    def free_cells
-      @board.flatten.count(nil)
-    end
-    
   end
     
   class Player
