@@ -1,4 +1,4 @@
-module TicTacToe
+# module TicTacToe
   class Game
     def initialize(player1, player2)
       @player1 = player1
@@ -25,14 +25,26 @@ module TicTacToe
       puts "Congratulations, #{@winner}! You won!"
     end
     def display_board
-      puts "  1 2 3"
-      @board.each_with_index do |row, row_index|
-        print "#{row_index + 1} "
-        row.each do |cell|
-          print "#{cell} "
+      if @board.flatten.count(nil) == 9
+        cell_value = 0
+        @board.each_with_index do |row, row_index|
+          row.each_with_index do |cell, cell_index|
+             cell_value += 1
+            row[cell_index] = cell_value
+            print "#{row[cell_index]} "
+          end
+          puts
         end
-        puts
-      end
+      else 
+        @board.each_with_index do |row, row_index|
+          row.each_with_index do |cell, cell_index|
+            row[cell_index] = cell
+            print "#{cell} "
+          end
+          puts
+        end
+        
+      end  
     end
     def player_move
       puts "It's #{@current_player.name}'s turn. Enter a number to place your marker:"
@@ -60,7 +72,7 @@ module TicTacToe
           @winner = @current_player
           return
         end
-        
+      end  
       # check diagonals
       if @board[0][0] == @board[1][1] && @board[1][1] == @board[2][2] && @board[0][0]  
         @winner = @current_player
@@ -82,7 +94,7 @@ module TicTacToe
     
   class Player
     attr_accessor :name, :marker
-    def initialize(name, marker, game)
+    def initialize(name, marker)
       @name = name
       @marker = marker
     end
@@ -125,8 +137,8 @@ module TicTacToe
     
   end
   
-end
-include TicTacToe 
+# end
+# include TicTacToe 
 game = Game.new(HumanPlayer.new("Player 1", "X"), HumanPlayer.new("Player 2", "O"))
 game.play
-end
+# end
